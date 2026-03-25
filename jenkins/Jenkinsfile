@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    // این بخش را حتما اضافه کن تا ماون شناسایی شود
+    tools {
+        maven "maven-3.9" 
+    }
     options {
         skipStagesAfterUnstable()
     }
