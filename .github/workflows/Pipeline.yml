@@ -27,7 +27,7 @@ jobs:
       - name: build image
         env:
           DOCKER_USER: benlevydockerinfinity
-          DOCKER_PASSWORD: ${{secret.DOCKERHUB_PUSH}}
+          DOCKER_PASSWORD: ${{ secret.DOCKERHUB_PUSH }}
         run: | 
           docker build -t ${{ DOCKER_USER }}/hello_world_java:latest \
           -t ${{ DOCKER_USER }}/hello_world_java:${{ env.VERSION }}  .
