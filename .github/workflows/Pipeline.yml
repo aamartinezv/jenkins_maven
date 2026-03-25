@@ -15,7 +15,7 @@ jobs:
       - name: Set up Java and Maven environment
         uses: actions/setup-java@v5.2.0
         with:
-          java-version: 17
+          java-version: 21
           distribution: temurin
       - name: Build and Publish jar file to packages
         run: mvn deploy
