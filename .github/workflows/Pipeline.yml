@@ -4,9 +4,22 @@ on:
     branches: [feature/ci_setup]
 
 jobs:
-  build:
+  build_and_push_jar:
     runs-on: ubuntu-latest
+    permissions:
+        contents: read
+        packages: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
-    
+      - name: Set up Java and Maven environment
+        uses: actions/setup-java@v5.2.0
+        with:
+          java-version: 17
+          distribution: temurin
+      - name: Build and Publish jar file to packages
+        run: mvn deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
