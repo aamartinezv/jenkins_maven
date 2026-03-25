@@ -25,16 +25,13 @@ jobs:
           echo "VERSION=$STRING_VERSION" >> $GITHUB_ENV
       
       - name: build image
-        env:
-          DOCKER_USER: benlevydockerinfinity
-          DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_PUSH }}
         run: | 
-          docker build -t ${{ env.DOCKER_USER }}/hello_world_java:latest \
-          -t ${{ env.DOCKER_USER }}/hello_world_java:${{ env.VERSION }}  .
+          docker build -t ${{ vars.DOCKER_USER }}/hello_world_java:latest \
+          -t ${{ vars.DOCKER_USER }}/hello_world_java:${{ env.VERSION }}  .
           
-          docker login -u ${{ env.DOCKER_USER }} -p ${{ env.DOCKER_PASSWORD }}
-          docker push ${{ env.DOCKER_USER }}/hello_world_java:latest
-          docker push ${{ env.DOCKER_USER }}/hello_world_java:${{ env.VERSION }}
+          docker login -u ${{ vars.DOCKER_USER }} -p ${{ secrets.DOCKER_PUSH }}
+          docker push ${{ vars.DOCKER_USER }}/hello_world_java:latest
+          docker push ${{ vars.DOCKER_USER }}/hello_world_java:${{ env.VERSION }}
 
 
       #- name: Set up Java and Maven environment
