@@ -32,7 +32,8 @@ jobs:
           docker login -u ${{ vars.DOCKER_USER }} -p ${{ secrets.DOCKERHUB_PUSH }}
           docker push ${{ vars.DOCKER_USER }}/hello_world_java:latest
           docker push ${{ vars.DOCKER_USER }}/hello_world_java:${{ env.VERSION }}
-
+      - name: deploy image
+        run: docker run ${{ vars.DOCKER_USER }}/hello_world_java:latest
 
       #- name: Set up Java and Maven environment
         #uses: actions/setup-java@v5.2.0
