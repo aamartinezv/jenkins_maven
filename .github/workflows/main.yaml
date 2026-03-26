@@ -24,6 +24,11 @@ jobs:
           distribution: 'temurin'
           java-version: '25'
       - run: mvn test
+      - name: Upload JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: built-jar
+          path: target/*.jar
 
   deliver:
     needs: [build, test]
@@ -35,4 +40,9 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '25'
-      - run: java -jar target/my-app-1.0.0.jar
+      - name: Download JAR
+        uses: actions/download-artifact@v4
+        with:
+          name: built-jar
+          path: target/
+      - run: java -jar target/*.jar
