@@ -46,7 +46,7 @@ jobs:
         uses: ./.github/actions/deploy
         with:
           registry: ${{ env.REGISTRY }}
-          repository: ${{ steps.build.REPOSITORY }}/${{ steps.build.IMAGE_NAME }}
+          repository: ${{ steps.build.outputs.REPOSITORY }}/${{ steps.build.outputs.IMAGE_NAME }}
           tag: ${{ steps.build.REPOSITORY }}
           ip_address: ${{ vars.DEPLOY_IP }}
           key_path: ~/.ssh/key.pem
