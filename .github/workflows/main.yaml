@@ -35,4 +35,4 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '25'
-      - run: java -jar target/${NAME}-${VERSION}.jar
+      - run: java -jar target/my-app-1.0.0.jar
