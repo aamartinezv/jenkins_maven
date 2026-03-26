@@ -16,6 +16,9 @@ inputs:
     key_path:
       description: path to ssh key
       required: true
+    docker_user:
+      description: user for registry
+      required: true
 runs:
   using: composite
   steps:
@@ -26,5 +29,7 @@ runs:
         scp -i ${{ inputs.key_path }} scripts/docker_install.sh ubuntu@${{ inputs.ip_address }}:~/.
         ssh -i ${{ inputs.key_path }} ubuntu@${{ inputs.ip_address }} << 'EOF'
         ./docker_install.sh
+        sudo apt-get update && sudo apt-get install -y awscli
+        aws ecr get-login-password --region eu-west-1 | docker login -u AWS --password-stdin ${{ inputs.registry }}
         sudo docker run ${{ inputs.registry }}/${{ inputs.repository }}:tag 
-        
+        EOF
