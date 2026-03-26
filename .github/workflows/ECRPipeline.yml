@@ -47,7 +47,7 @@ jobs:
         with:
           registry: ${{ env.REGISTRY }}
           repository: ${{ steps.build.outputs.REPOSITORY }}/${{ steps.build.outputs.IMAGE_NAME }}
-          tag: ${{ steps.build.REPOSITORY }}
+          tag: latest
           ip_address: ${{ vars.DEPLOY_IP }}
           key_path: ~/.ssh/key.pem
           docker_user: AWS
