@@ -36,6 +36,6 @@ runs:
         sudo ./aws/install --update && \
         rm -rf awscliv2.zip ./aws
 
-        aws ecr get-login-password --region eu-west-1 | docker login -u AWS --password-stdin ${{ inputs.registry }}
+        aws ecr get-login-password --region eu-west-1 | sudo docker login -u AWS --password-stdin ${{ inputs.registry }}
         sudo docker run ${{ inputs.registry }}/${{ inputs.repository }}:${{ inputs.tag }}  
         EOF
