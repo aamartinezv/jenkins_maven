@@ -1,8 +1,6 @@
 name: deploy
 description: increments maven artifact version and pushes updated pom file to repo
-runs:
-  using: composite
-  inputs:
+inputs:
     registry:
       description: registry to push to
       required: true
@@ -18,7 +16,8 @@ runs:
     key_path:
       description: path to ssh key
       required: true
-
+runs:
+  using: composite
   steps:
     - name: deploy
       run: |
