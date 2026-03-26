@@ -12,17 +12,28 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
+        with:
+          token: ${{secrets.GITHUB_TOKEN}}
+
       
       - name: increment version
         run: |
           mvn build-helper:parse-version versions:set \
           -DnewVersion=\${parsedVersion.majorVersion}.\
-          \${parsedVersion.minorVersion}.\${{ github.run_number }} \
+          \${parsedVersion.minorVersion}.\${parsedVersion.nextIncrementalVersion} \
           versions:commit
           
           STRING_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
           
           echo "VERSION=$STRING_VERSION" >> $GITHUB_ENV
+      
+      - name: push altered maven file
+        run: |
+          git config --local user.email "runner@github.com"
+          git config --local user.name "GitHub Runner"
+          git add pom.xml
+          git commit -m "git bot: Automated CI Commit [skip CI]"
+          git push
       
       - name: build image
         run: | 
