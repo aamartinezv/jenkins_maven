@@ -29,4 +29,5 @@ jobs:
     needs: [build, test]
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v6
       - run: ./jenkins/scripts/deliver.sh
