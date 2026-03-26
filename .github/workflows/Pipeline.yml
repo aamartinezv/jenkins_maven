@@ -1,7 +1,7 @@
 name : CI/CD Pipeline
 on:
-  push:
-    branches: [feature/ci_setup]
+  pull_request:
+    branches: [main]
 
 jobs:
   build_and_push_jar:
