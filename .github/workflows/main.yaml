@@ -24,7 +24,6 @@ jobs:
           distribution: 'temurin'
           java-version: '25'
       - run: mvn test
-      - run: junit 'target/surefire-reports/*.xml'
 
   deliver:
     needs: [build, test]
