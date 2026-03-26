@@ -22,6 +22,7 @@ runs:
     - name: deploy
       shell: bash
       run: |
+        ssh-keyscan ${{ vars.DEPLOY_IP }} >> ~/.ssh/known_hosts
         scp -i ${{ inputs.key_path }} scripts/docker_install.sh ubuntu@${{ inputs.ip_address }}:~/.
         ssh -i ${{ inputs.key_path }} ubuntu@${{ inputs.ip_address }} << 'EOF'
         ./docker_install.sh
