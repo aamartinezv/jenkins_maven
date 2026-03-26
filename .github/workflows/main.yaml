@@ -35,4 +35,4 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '25'
-      - run: ./jenkins/scripts/deliver.sh
+      - run: java -jar target/${NAME}-${VERSION}.jar
