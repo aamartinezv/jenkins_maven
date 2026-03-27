@@ -50,7 +50,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Pull image
-        run: docker pull odedanuka/maven${{ github.ref }}
+        run: docker pull odedanuka/maven:${{ github.ref }}
 
       - name: Run container
-        run: docker run -d --rm odedanuka/maven${{ github.ref }}
+        run: docker run -d --rm odedanuka/maven:${{ github.ref }}
