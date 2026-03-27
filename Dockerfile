@@ -1,5 +1,15 @@
-FROM maven:eclipse-temurin
+FROM maven:3.9.14-eclipse-temurin-17-alpine AS build
 
-COPY /home/runner/work/simple-java-maven-app/simple-java-maven-app/target/my-app-1.0.0.jar app.jar
+WORKDIR /app
+
+COPY pom.xml .
+COPY src/ ./src/
+
+RUN mvn clean install
+
+FROM eclipse-temurin:17
+
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
 
 CMD [ "java", "-jar",  "app.jar"]
