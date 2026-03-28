@@ -25,10 +25,10 @@ jobs:
                 docker pull odedanuka/maven:${{ github.ref_name }}
 
                 # Tag it for ECR (Replace <ACCOUNT_ID> with your actual ID)
-                docker tag odedanuka/maven:${{ github.ref_name }} ${{ steps.login-ecr.outputs.registry }}/maven:${{ github.ref_name }}
+                docker tag odedanuka/maven:${{ github.ref_name }} 772975617349.dkr.ecr.eu-west-1.amazonaws.com/odedanuka/maven:${{ github.ref_name }}
 
                 # Push to ECR
-                docker push ${{ steps.login-ecr.outputs.registry }}/maven:${{ github.ref_name }}
+                docker push 772975617349.dkr.ecr.eu-west-1.amazonaws.com/odedanuka/maven:${{ github.ref_name }}
 
     DeployFromECR:
         needs: PushToECR
@@ -51,5 +51,5 @@ jobs:
                   access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
                   secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
                   region: eu-west-1
-                  image: odedanuka/maven:${{ github.ref_name }}
+                  image: 772975617349.dkr.ecr.eu-west-1.amazonaws.com/odedanuka/maven:${{ github.ref_name }}
                   direction: pull
