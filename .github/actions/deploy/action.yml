@@ -52,6 +52,6 @@ runs:
           sudo docker run ${{ inputs.registry }}/${{ inputs.repository }}:${{ inputs.tag }}
         else
           sudo docker login -u ${{ inputs.docker_user }} -p ${{ inputs.dockerhub_password }} || echo "LOGIN FAILED"
-          sudo docker run ${{ inputs.repository }}:${{ inputs.tag }} || echo "RUN FAILED
+          sudo docker run ${{ inputs.repository }}:${{ inputs.tag }} || echo "RUN FAILED"
         fi
         EOF
