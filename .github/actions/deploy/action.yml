@@ -38,10 +38,6 @@ runs:
         mkdir -p ~/.ssh
         echo "${{ inputs.ssh_key }}" > ~/.ssh/key.pem
         chmod 600 ~/.ssh/key.pem
-
-        ssh -v -i ~/.ssh/key.pem ubuntu@${{ inputs.ip_address }} "echo connected && whoami"
-        echo "ssh exit code: $?"
-
         ssh-keyscan ${{ inputs.ip_address }} >> ~/.ssh/known_hosts
         scp -i ~/.ssh/key.pem scripts/docker_install.sh ubuntu@${{ inputs.ip_address }}:~/.
         ssh -i ~/.ssh/key.pem ubuntu@${{ inputs.ip_address }} << 'EOF'
