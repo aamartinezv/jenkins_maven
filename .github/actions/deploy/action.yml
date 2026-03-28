@@ -40,7 +40,7 @@ runs:
         chmod 600 ~/.ssh/key.pem
         ssh-keyscan ${{ inputs.ip_address }} >> ~/.ssh/known_hosts
         scp -i ~/.ssh/key.pem scripts/docker_install.sh ubuntu@${{ inputs.ip_address }}:~/.
-        ssh -i ~/.ssh/key.pem ubuntu@${{ inputs.ip_address }} << 'EOF' 2>&1
+        ssh -i ~/.ssh/key.pem ubuntu@${{ inputs.ip_address }} echo "connected && whoami"
         ./docker_install.sh || echo "INSTALL FAILED"
         
         if [[ "${{ inputs.registry_type }}" == "ecr" ]]; then
