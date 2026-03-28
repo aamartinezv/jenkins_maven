@@ -8,9 +8,6 @@ jobs:
     PushToECR:
         runs-on: self-hosted
         steps:
-            - name: pull from docker hub
-              run: docker pull odedanuka/maven:${{ github.ref_name }}
-
             - name: Configure AWS Credentials
               uses: aws-actions/configure-aws-credentials@v2
               with:
@@ -19,17 +16,19 @@ jobs:
                 aws-region: eu-west-1
 
             - name: Login to Amazon ECR
+              id: login-ecr
               uses: aws-actions/amazon-ecr-login@v2
 
+            - name: Pull from Docker Hub & Push to ECR
+              run: |
+                # Pull the source image
+                docker pull odedanuka/maven:${{ github.ref_name }}
 
-            - name: Push to ECR
-              id: ecr
-              uses: jwalton/gh-ecr-push@v2
-              with:
-                  access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-                  secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-                  region: eu-west-1
-                  image: odedanuka/maven:${{ github.ref_name }}
+                # Tag it for ECR (Replace <ACCOUNT_ID> with your actual ID)
+                docker tag odedanuka/maven:${{ github.ref_name }} ${{ steps.login-ecr.outputs.registry }}/maven:${{ github.ref_name }}
+
+                # Push to ECR
+                docker push ${{ steps.login-ecr.outputs.registry }}/maven:${{ github.ref_name }}
 
     DeployFromECR:
         needs: PushToECR
