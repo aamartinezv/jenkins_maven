@@ -1,7 +1,7 @@
 name : CI/CD Pipeline
 on:
   push:
-    branches: [master]
+    branches: [retry_dh_deploy]
 env:
   IMAGE: hello_world_java
 jobs:
