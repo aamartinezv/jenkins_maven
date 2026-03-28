@@ -1,0 +1,34 @@
+name: AWS
+on:
+    push:
+        branches:
+            - "AWS-Infrastructure"
+
+jobs:
+    PushToECR:
+        runs-on: self-hosted
+        steps:
+            - name: pull from docker hub
+              run: docker pull odedanuka/maven:${{ github.ref_name }}
+
+            - name: Push to ECR
+              id: ecr
+              uses: jwalton/gh-ecr-push@v2
+              with:
+                  access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                  secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                  region: eu-west-1
+                  image: odedanuka/maven:${{ github.ref_name }}
+
+    DeployFromECR:
+        runs-on: self-hosted
+        steps:
+            - name: Pull from ECR
+              id: ecr
+              uses: jwalton/gh-ecr-push@v2
+              with:
+                  access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                  secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                  region: eu-west-1
+                  image: odedanuka/maven:${{ github.ref_name }}
+                  direction: pull
