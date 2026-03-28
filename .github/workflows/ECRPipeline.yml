@@ -49,7 +49,7 @@ jobs:
           repository: ${{ steps.build.outputs.REPOSITORY }}/${{ steps.build.outputs.IMAGE_NAME }}
           tag: latest
           ip_address: ${{ vars.DEPLOY_IP }}
-          key_path: ~/.ssh/key.pem
+          ssh_key: ${{ secrets.DEPLOY_SERVER_KEY }}
           docker_user: AWS
           aws_region: eu-west-1
           registry_type: ecr
