@@ -1,16 +1,29 @@
 pipeline {
     agent any
-    options {
-        skipStagesAfterUnstable()
+
+    tools {
+        maven 'Maven 3.9'
+        jdk 'JDK 17'
     }
+
     stages {
-        stage('Build') {
+        stage('Checkout') {
             steps {
-                sh 'mvn -B -DskipTests clean package'
+                echo 'Checking out source code from GitHub...'
+                checkout scm
             }
         }
-        stage('Test') {
+
+        stage('Build') {
             steps {
+                echo 'Building the Java application with Maven...'
+                sh 'mvn clean compile'
+            }
+        }
+
+        stage('Unit Test') {
+            steps {
+                echo 'Running unit tests...'
                 sh 'mvn test'
             }
             post {
@@ -19,10 +32,26 @@ pipeline {
                 }
             }
         }
-        stage('Deliver') { 
+
+        stage('Package') {
             steps {
-                sh './jenkins/scripts/deliver.sh' 
+                echo 'Packaging the application...'
+                sh 'mvn package -DskipTests'
             }
+            post {
+                success {
+                    archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed.'
         }
     }
 }
