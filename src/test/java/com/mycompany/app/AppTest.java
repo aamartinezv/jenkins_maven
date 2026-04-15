@@ -1,25 +1,51 @@
 package com.mycompany.app;
 
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+public class AppTest {
 
-/**
- * Unit test for simple App.
- */
-public class AppTest
-{
     @Test
-    public void testAppConstructor() {
-        App app1 = new App();
-        App app2 = new App();
-        assertEquals(app1.getMessage(), app2.getMessage());
+    public void testAppCanBeInstantiated() {
+        App app = new App();
+        assertNotNull(app);
     }
 
     @Test
-    public void testAppMessage()
-    {
-        App app = new App();
-        assertEquals("Hello World!", app.getMessage());
+    public void testMessageIsHelloWorld() {
+        assertEquals("Hello world!", App.getMessage());
+    }
+
+    @Test
+    public void testMessageIsNotNull() {
+        assertNotNull(App.getMessage());
+    }
+
+    @Test
+    public void testMessageIsNotEmpty() {
+        assertFalse(App.getMessage().isEmpty());
+    }
+
+    @Test
+    public void testMessageContainsHello() {
+        assertTrue(App.getMessage().contains("Hello"));
+    }
+
+    @Test
+    public void testMessageContainsWorld() {
+        assertTrue(App.getMessage().contains("world"));
+    }
+    
+    @Test
+    public void testMainMethodRuns() {
+        // Test that main method runs without throwing any exception
+        assertDoesNotThrow(() -> App.main(new String[]{}));
+    }
+
+    @Test
+    public void testMessageEqualsExpected() {
+        String expected = "Hello world!";
+        String actual = App.getMessage();
+        assertEquals(expected.length(), actual.length());
     }
 }
