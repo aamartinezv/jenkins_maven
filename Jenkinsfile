@@ -9,7 +9,7 @@ pipeline {
 
         stage('Clone') {
             steps {
-                git 'https://github.com/Liau21/simple-java-maven-app.git'
+                branch: 'feature/ci-setup',git 'https://github.com/Liau21/simple-java-maven-app.git'
             }
         }
 
