@@ -29,5 +29,11 @@ pipeline {
                 bat 'mvnw.cmd package'
             }
         }
+
+        stage('Check Files') {
+            steps {
+                bat 'dir'
+            }
+        }
     }
 }
