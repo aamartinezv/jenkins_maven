@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        maven 'Maven'
+    }
+
     stages {
 
         stage('Clone') {
@@ -11,29 +15,32 @@ pipeline {
 
         stage('Build') {
             steps {
-                echo 'Building using Maven Wrapper...'
-                bat 'mvnw.cmd clean compile'
+                echo 'Building using Maven...'
+                sh './mvnw clean compile'
             }
         }
 
         stage('Test') {
             steps {
                 echo 'Running tests...'
-                bat 'mvnw.cmd test'
+                sh './mvnw test'
             }
         }
 
         stage('Package') {
             steps {
                 echo 'Packaging app...'
-                bat 'mvnw.cmd package'
+                sh './mvnw package'
             }
         }
+    }
 
-        stage('Check Files') {
-            steps {
-                bat 'dir'
-            }
+    post {
+        success {
+            echo 'Build Successful!'
+        }
+        failure {
+            echo 'Build Failed!'
         }
     }
 }
