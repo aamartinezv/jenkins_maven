@@ -12,21 +12,21 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building using Maven...'
-                sh './mvnw clean compile'
+                bat './mvnw clean compile'
             }
         }
 
         stage('Test') {
             steps {
                 echo 'Running tests...'
-                sh './mvnw test'
+                bat './mvnw test'
             }
         }
 
         stage('Package') {
             steps {
                 echo 'Packaging app...'
-                sh './mvnw package'
+                bat './mvnw package'
             }
         }
     }
