@@ -5,7 +5,7 @@ pipeline {
 
         stage('Clone') {
             steps {
-               git branch: 'feature/ci-setup',git 'https://github.com/Liau21/simple-java-maven-app.git'
+               git branch: 'feature/ci-setup', url: 'https://github.com/Liau21/simple-java-maven-app.git'
             }
         }
 
